@@ -6,7 +6,7 @@
     <div v-show="loading" id="loading">{{ loadingMsg }}</div>
     <div v-show="!loading">
       <span class="button" @click="prev()">prev</span>
-      <span class="button" @click="next()">next</span>
+      <span class="button" @click="next()" v-show="allowNext()">next</span>
     </div>
     <div v-show="!loading">
       <img v-show="imageUrl" :src="imageUrl" :width="width" :height="height" @load="loadingOff()">
@@ -61,20 +61,23 @@
             setDate(date) {
                 if(typeof date === 'undefined') {
                     this.date = new Date();
-                    return;
+                } else {
+                    this.date.setDate(date);
                 }
 
-                this.date.setDate(date);
                 this.getImage();
             },
             prev() {
                 this.setDate(this.date.getDate() - 1);
             },
             next() {
-                if(this.date >= this.maxDate) {
+                if(!this.allowNext()) {
                     return;
                 }
                 this.setDate(this.date.getDate() + 1);
+            },
+            allowNext() {
+                return this.date < this.maxDate;
             },
             getImage() {
                 const self = this;
