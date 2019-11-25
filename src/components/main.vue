@@ -4,7 +4,7 @@
     <h2>
       <span class="button" @click="prev()">&lt;</span>
       <span>{{ simpleDate() }}</span>
-      <span class="button" @click="next()" v-show="allowNext()">&gt;</span>
+      <span class="button" :class="{disabled: !allowNext()}" @click="next()">&gt;</span>
     </h2>
     <h4 id="status">{{ status }}</h4>
     <div v-show="loading" id="loading">{{ loadingMsg }}</div>
@@ -164,5 +164,9 @@
 
   #loading {
     color: green;
+  }
+
+  .disabled {
+    color: lightgray;
   }
 </style>
