@@ -1,12 +1,14 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>{{ simpleDate() }}</h2>
+    <h2>
+      <span class="button" @click="prev()">&lt;</span>
+      <span>{{ simpleDate() }}</span>
+      <span class="button" @click="next()" v-show="allowNext()">&gt;</span>
+    </h2>
     <h4 id="status">{{ status }}</h4>
     <div v-show="loading" id="loading">{{ loadingMsg }}</div>
     <div v-show="!loading">
-      <span class="button" @click="prev()">prev</span>
-      <span class="button" @click="next()" v-show="allowNext()">next</span>
     </div>
     <div v-show="!loading">
       <img v-show="imageUrl" :src="imageUrl" :width="width" :height="height" @load="loadingOff()">
@@ -154,6 +156,7 @@
   }
 
   .button {
+    font-weight: bold;
     padding: 5px;
     margin: 10px;
     cursor: pointer;
