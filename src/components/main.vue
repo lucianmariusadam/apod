@@ -9,8 +9,6 @@
     <h4 id="status">{{ status }}</h4>
     <div v-show="loading" id="loading">{{ loadingMsg }}</div>
     <div v-show="!loading">
-    </div>
-    <div v-show="!loading">
       <img v-show="imageUrl" :src="imageUrl" :width="width" :height="height" @load="loadingOff()">
       <iframe v-show="videoUrl" :src="videoUrl" :width="width" :height="height" @load="loadingOff()"></iframe>
       <div id="explanation">{{ explanation }}</div>
@@ -70,10 +68,13 @@
                 this.getImage();
             },
             prev() {
+                if(this.loading) {
+                    return;
+                }
                 this.setDate(this.date.getDate() - 1);
             },
             next() {
-                if(!this.allowNext()) {
+                if(this.loading || !this.allowNext()) {
                     return;
                 }
                 this.setDate(this.date.getDate() + 1);
